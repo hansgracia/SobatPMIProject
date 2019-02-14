@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+<<<<<<< HEAD
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/SobatPMIProject" vcs="Git" />
+=======
+    <mapping directory="" vcs="Git" />
+>>>>>>> 8a7b42aeda8740c4c0e483228ae4b28ad20b1085
   </component>
 </project>
