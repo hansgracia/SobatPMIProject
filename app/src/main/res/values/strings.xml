@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SobatPMI</string>
+    <string name="logo_sobat_pmi">Logo Sobat PMI</string>
+    <string name="sobat_pmi">Sobat PMI</string>
+    <string name="username_or_email">Username or Email</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="or">OR</string>
+    <string name="login_with_facebook">LOGIN WITH FACEBOOK</string>
+    <string name="login_with_gmail">LOGIN WITH GMAIL</string>
+    <string name="input_minimum_password">INPUT MINIMUM PASSWORD</string>
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="?attr/colorError"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/DONOR DARAH"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:text="DONOR DARAH"
+        tools:background="@android:color/holo_green_light"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="239dp" />
+
+    <Button
+        android:id="@+id/LOKASI PMI"
+        android:layout_width="119dp"
+        android:layout_height="47dp"
+        android:background="@android:color/holo_green_light"
+        android:text="LOKASI PMI"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="297dp" />
+
+    <Button
+        android:id="@+id/KEGIATAN"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:text="KEGIATAN"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="354dp" />
+
+    <Button
+        android:id="@+id/INFO UMUM"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:text="INFO UMUM"
+        tools:layout_editor_absoluteX="147dp"
+        tools:layout_editor_absoluteY="412dp" />
+
+    <Button
+        android:id="@+id/PROFIL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PROFIL"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="629dp" />
+
+    <Button
+        android:id="@+id/SIGN OUT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SIGN OUT"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="677dp" />
+
+</android.support.constraint.ConstraintLayout>
