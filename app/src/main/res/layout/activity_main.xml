@@ -11,52 +11,94 @@
         android:id="@+id/DONOR DARAH"
         android:layout_width="119dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="DONOR DARAH"
-        tools:background="@android:color/holo_green_light"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="239dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@android:color/holo_green_light" />
 
     <Button
         android:id="@+id/LOKASI PMI"
         android:layout_width="119dp"
         android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@android:color/holo_green_light"
         android:text="LOKASI PMI"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="297dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DONOR DARAH" />
 
     <Button
         android:id="@+id/KEGIATAN"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@android:color/holo_green_light"
         android:text="KEGIATAN"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="354dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LOKASI PMI" />
 
     <Button
         android:id="@+id/INFO UMUM"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@android:color/holo_green_light"
         android:text="INFO UMUM"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="412dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/KEGIATAN" />
 
     <Button
         android:id="@+id/PROFIL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="PROFIL"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="629dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/INFO UMUM" />
 
     <Button
         android:id="@+id/SIGN OUT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="SIGN OUT"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="677dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PROFIL" />
 
 </android.support.constraint.ConstraintLayout>
