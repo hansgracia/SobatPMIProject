@@ -10,4 +10,15 @@
     <string name="login_with_facebook">LOGIN WITH FACEBOOK</string>
     <string name="login_with_gmail">LOGIN WITH GMAIL</string>
     <string name="input_minimum_password">INPUT MINIMUM PASSWORD</string>
+    <string name="name_label_text">Name</string>
+    <string name="enter_name_hint">Enter your Name</string>
+    <string name="username_label_text">Username</string>
+    <string name="enter_username_hint">Enter username</string>
+    <string name="phone_label_text">Phone</string>
+    <string name="enter_phone_hint">Enter phone</string>
+    <string name="email_label_text">Email</string>
+    <string name="enter_email_hint">Enter Email</string>
+    <string name="password_label_text">Password</string>
+    <string name="enter_password_hint">Enter Password</string>
+    <string name="signup_label_text">SIGN UP</string>
 </resources>
