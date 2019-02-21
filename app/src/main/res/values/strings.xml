@@ -21,4 +21,6 @@
     <string name="password_label_text">Password</string>
     <string name="enter_password_hint">Enter Password</string>
     <string name="signup_label_text">SIGN UP</string>
+    <string name="jeniskelamin_label_text">Jenis Kelamin</string>
+    <string name="enter_JenisKelamin_hint">Pilih Jenis kelamin</string>
 </resources>
