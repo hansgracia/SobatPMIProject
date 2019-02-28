@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        firebaseAuthListener = new FirebaseAuth.AuthStateListener();
 
+        //
         signupButton = (Button) findViewById(R.id.buttonSignOut);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
