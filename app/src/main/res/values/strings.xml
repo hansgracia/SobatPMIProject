@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SobatPMI</string>
+    <string name="facebook_app_id">321501258497600</string>
+    <string name="fb_login_protocol_scheme">fb321501258497600</string>
     <string name="logo_sobat_pmi">Logo Sobat PMI</string>
     <string name="sobat_pmi">Sobat PMI</string>
     <string name="username_or_email">Username or Email</string>
@@ -24,4 +26,11 @@
     <string name="jeniskelamin_label_text">Jenis Kelamin</string>
     <string name="enter_JenisKelamin_hint">Pilih Jenis kelamin</string>
     <string name="sign_in">SIGN IN</string>
+    <string name="my_dashboard">My Dashboard</string>
+    <string name="donor_darah">Donor Darah</string>
+    <string name="lokasi_pmi">Lokasi PMI</string>
+    <string name="kegiatan">Kegiatan</string>
+    <string name="informasi_umum">Informasi Umum</string>
+    <string name="profil">Profil</string>
+    <string name="logout">Logout</string>
 </resources>

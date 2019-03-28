@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignupActivity extends AppCompatActivity {
 
-    EditText textName, textUsername,textEmail, textPhone, textPassword;
+    EditText textUsername,textEmail, textPassword, textConfPassword;
     Button signup_button, signin_button;
     private FirebaseAuth mAuth;
     private static final String TAG = "";
@@ -32,29 +32,20 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        textName = (EditText)findViewById(R.id.name_text);
-        textUsername = (EditText)findViewById(R.id.username_text);
         textEmail = (EditText)findViewById(R.id.email_text);
         textPassword = (EditText)findViewById(R.id.password_text);
-        textPhone = (EditText)findViewById(R.id.phone_text);
-        signup_button = (Button)findViewById(R.id.btnSignup);
+        textConfPassword = (EditText)findViewById(R.id.confpassword_text);
+        signup_button = (Button)findViewById(R.id.buttonSignUp);
         signin_button = (Button)findViewById(R.id.buttonSignIn);
-
-        signup_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-            }
-        });
 
         mAuth = FirebaseAuth.getInstance();
 
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = textUsername.getText().toString().trim();
                 String email = textEmail.getText().toString().trim();
                 final String password = textPassword.getText().toString().trim();
+                final String confpassword = textConfPassword.getText().toString().trim();
 
                 if(textEmail.toString().isEmpty() || textPassword.toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), "" +
@@ -63,28 +54,35 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 else {
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
-                            SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()){
-                                        Log.d(TAG, "createUserWithEmail:success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                    else {
-                                        if(password.length() < 6){
-                                            textPassword.setError(getString(R.string.input_minimum_password));
+                    if(password != confpassword ){
+                        Toast.makeText(getApplicationContext(), "" +
+                                "Make your password same each other !", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else {
+                        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
+                                SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()){
+                                            Log.d(TAG, "createUserWithEmail:success");
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
                                         }
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(SignupActivity.this, "Authentication failed."
-                                                        +task.getException(), Toast.LENGTH_SHORT  ).show();
+                                        else {
+                                            if(password.length() < 6){
+                                                textPassword.setError(getString(R.string.input_minimum_password));
+                                            }
+                                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                            Toast.makeText(SignupActivity.this, "Authentication failed."
+                                                    +task.getException(), Toast.LENGTH_SHORT  ).show();
+                                        }
                                     }
                                 }
-                            }
-                    );
+                        );
+                    }
                 }
             }
         });
