@@ -33,4 +33,12 @@
     <string name="informasi_umum">Informasi Umum</string>
     <string name="profil">Profil</string>
     <string name="logout">Logout</string>
+    <string name="title_activity_donor_darah">DonorDarahActivity</string>
+    
+    <string-array name="golongan_darah">
+        <item name="golA">A</item>
+        <item name="golB">B</item>
+        <item name="golAB">AB</item>
+        <item name="golO">O</item>
+    </string-array>
 </resources>

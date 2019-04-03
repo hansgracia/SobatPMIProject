@@ -1,5 +1,6 @@
 package com.example.hans_pc.sobatpmi.AccountActivity;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignupActivity extends AppCompatActivity {
 
-    EditText textUsername,textEmail, textPassword, textConfPassword;
+    EditText textUsername, textEmail, textPassword, textConfPassword;
     Button signup_button, signin_button;
     private FirebaseAuth mAuth;
     private static final String TAG = "";
@@ -32,11 +33,11 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        textEmail = (EditText)findViewById(R.id.email_text);
-        textPassword = (EditText)findViewById(R.id.password_text);
-        textConfPassword = (EditText)findViewById(R.id.confpassword_text);
-        signup_button = (Button)findViewById(R.id.buttonSignUp);
-        signin_button = (Button)findViewById(R.id.buttonSignIn);
+        textEmail = findViewById(R.id.email_text);
+        textPassword = findViewById(R.id.password_text);
+        textConfPassword = findViewById(R.id.confpassword_text);
+        signup_button = findViewById(R.id.buttonSignup);
+        signin_button = findViewById(R.id.buttonSignIn);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -45,40 +46,45 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = textEmail.getText().toString().trim();
                 final String password = textPassword.getText().toString().trim();
-                final String confpassword = textConfPassword.getText().toString().trim();
+                String confpassword = textConfPassword.getText().toString().trim();
 
-                if(textEmail.toString().isEmpty() || textPassword.toString().isEmpty()){
+                if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "" +
                             "Dont let email or password is empty !", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                else {
-                    if(password != confpassword ){
-                        Toast.makeText(getApplicationContext(), "" +
-                                "Make your password same each other !", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    else {
+                } else {
+                    if (!password.equals(confpassword)) {
+                        textPassword.setError("Your password not matching!");
+                        textConfPassword.setError("Your password not matching!");
+                    } else {
+                        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
+                                R.style.AppTheme_Dark_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Registering..");
+                        progressDialog.show();
                         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
                                 SignupActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()){
+                                        if (task.isSuccessful()) {
                                             Log.d(TAG, "createUserWithEmail:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
-                                        }
-                                        else {
-                                            if(password.length() < 6){
+                                        } else {
+                                            if (password.length() < 6) {
                                                 textPassword.setError(getString(R.string.input_minimum_password));
                                             }
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                             Toast.makeText(SignupActivity.this, "Authentication failed."
-                                                    +task.getException(), Toast.LENGTH_SHORT  ).show();
+                                                    + task.getException(), Toast.LENGTH_SHORT).show();
                                         }
+                                        new android.os.Handler().postDelayed(
+                                                new Runnable() {
+                                                    public void run() {
+                                                        progressDialog.dismiss();
+                                                    }
+                                                }, 500);
                                     }
                                 }
                         );

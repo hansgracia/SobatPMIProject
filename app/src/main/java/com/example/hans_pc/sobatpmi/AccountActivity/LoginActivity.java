@@ -1,5 +1,6 @@
 package com.example.hans_pc.sobatpmi.AccountActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -56,11 +57,11 @@ public class LoginActivity extends AppCompatActivity {
 
         printKeyHash();
 
-        textUsername = (EditText)findViewById(R.id.inputUsername);
-        textPassword = (EditText)findViewById(R.id.inputPassword);
-        buttonLogin = (Button)findViewById(R.id.buttonLoginSelanjutnya);
-        buttonSignUp = (Button)findViewById(R.id.buttonSignUp);
-        buttonLoginFacebook = (LoginButton)findViewById(R.id.buttonLoginFacebook);
+        textUsername = (EditText) findViewById(R.id.inputUsername);
+        textPassword = (EditText) findViewById(R.id.inputPassword);
+        buttonLogin = (Button) findViewById(R.id.buttonLoginSelanjutnya);
+        buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
+        buttonLoginFacebook = (LoginButton) findViewById(R.id.buttonLoginFacebook);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -86,40 +87,61 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = textUsername.getText().toString();
-                final String password = textPassword.getText().toString();
+                String username = textUsername.getText().toString().trim();
+                final String password = textPassword.getText().toString().trim();
 
-                if(username.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Mohon Inputkan Email atau Username Anda",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if(password.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Mohon Inputkan Password Anda",
-                            Toast.LENGTH_SHORT).show();
-                    return;
+                if (username.isEmpty()) {
+                    textUsername.setError("Silahkan masukkan email anda");
+                } else if (password.isEmpty()) {
+                    textPassword.setError("Silahkan masukkan password anda");
+                } else {
+
+                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                            R.style.AppTheme_Dark_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage("Authenticating...");
+                    progressDialog.show();
+
+                    firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener
+                            (LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        if (password.length() < 6) {
+                                            textPassword.setError(getString(R.string.input_minimum_password));
+                                        }
+                                        else{
+                                            Toast.makeText(LoginActivity.this, "Login gagal." +task.getException(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        goMainScreen();
+                                    }
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                public void run() {
+                                                    progressDialog.dismiss();
+                                                }
+                                            }, 500);
+                                }
+                            }).addOnFailureListener(LoginActivity.this,
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(LoginActivity.this, "Login gagal. Terjadi kesalahan dengan " +
+                                                    "server " +e.getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                public void run() {
+                                                    progressDialog.dismiss();
+                                                }
+                                            }, 500);
+                                    clear();
+                                }
+                            });
                 }
 
-                firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener
-                        (LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            if(password.length() < 6){
-                                textPassword.setError(getString(R.string.input_minimum_password));
-                            }
-                            else {
-                                Toast.makeText(LoginActivity.this, "Password Anda Salah",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        else{
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                });
             }
         });
 
@@ -127,12 +149,17 @@ public class LoginActivity extends AppCompatActivity {
         buttonLoginFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn();
+                signInFacebook();
             }
         });
     }
 
-    private void signIn() {
+    private void clear() {
+        textUsername.setText(null);
+        textPassword.setText(null);
+    }
+
+    private void signInFacebook() {
         buttonLoginFacebook.registerCallback(mCallBackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -152,25 +179,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
         firebaseAuth.signInWithCredential(credential).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("ERROR_EXIT", ""+e.getMessage());
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+                Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("ERROR_EXIT", "" + e.getMessage());
+                goMainScreen();
             }
         }).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 String email = authResult.getUser().getEmail();
-                Toast.makeText(LoginActivity.this, "You are sign in with email" +email,
+                Toast.makeText(LoginActivity.this, "You are sign in with email" + email,
                         Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+                goMainScreen();
             }
         });
     }
@@ -179,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -189,16 +214,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void printKeyHash() {
-        try{
+        try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(
                     "com.example.hans_pc.sobatpmi", PackageManager.GET_SIGNATURES);
-            for(Signature signature:packageInfo.signatures){
+            for (Signature signature : packageInfo.signatures) {
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA");
                 messageDigest.update(signature.toByteArray());
                 Log.e("KEYHASH", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
             }
-        }
-        catch (PackageManager.NameNotFoundException e){
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
