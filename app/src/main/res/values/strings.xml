@@ -34,11 +34,19 @@
     <string name="profil">Profil</string>
     <string name="logout">Logout</string>
     <string name="title_activity_donor_darah">DonorDarahActivity</string>
-    
+
     <string-array name="golongan_darah">
         <item name="golA">A</item>
         <item name="golB">B</item>
         <item name="golAB">AB</item>
         <item name="golO">O</item>
     </string-array>
+
+    <string name="title_activity_info_umum">InfoUmumActivity</string>
+    <string name="info_umum">INFO UMUM</string>
+    <string name="info1">Tata Cara Donor Darah</string>
+    <string name="info2">Syarat Donor Darah</string>
+    <string name="info3">Keuntungan Donor Darah</string>
+    <string name="info4">Larangan bagi Pendonor darah</string>
+    <string name="info5">Golongan Darah dan rhesus</string>
 </resources>
