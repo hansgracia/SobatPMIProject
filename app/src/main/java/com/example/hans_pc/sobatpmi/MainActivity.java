@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.hans_pc.sobatpmi.AccountActivity.LoginActivity;
 import com.example.hans_pc.sobatpmi.Menu.DonorDarahActivity;
+import com.example.hans_pc.sobatpmi.Menu.InformasiUmumActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -15,15 +16,16 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private GoogleSignInAccount mGoogleSignInClient;
-    CardView donorDarahMenu, logoutMenu;
+    CardView donorDarahMenu, logoutMenu, infoUmumMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        donorDarahMenu = (CardView)findViewById(R.id.donorDarahMenu);
-        logoutMenu = (CardView)findViewById(R.id.logoutMenu);
+        donorDarahMenu = findViewById(R.id.donorDarahMenu);
+        infoUmumMenu = findViewById(R.id.infoUmumMenu);
+        logoutMenu = findViewById(R.id.logoutMenu);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -31,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, DonorDarahActivity.class));
+                finish();
+            }
+        });
+
+        infoUmumMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, InformasiUmumActivity.class));
+                finish();
             }
         });
 
@@ -42,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
 
