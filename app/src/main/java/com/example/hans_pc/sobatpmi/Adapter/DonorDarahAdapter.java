@@ -2,17 +2,17 @@ package com.example.hans_pc.sobatpmi.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.hans_pc.sobatpmi.Animation.AnimationUtil;
 import com.example.hans_pc.sobatpmi.Detail.DonorDarahDetail;
+import com.example.hans_pc.sobatpmi.Menu.DonorDarahActivity;
 import com.example.hans_pc.sobatpmi.Model.DataDonorDarah;
 import com.example.hans_pc.sobatpmi.R;
 
@@ -23,31 +23,31 @@ public class DonorDarahAdapter extends RecyclerView.Adapter<DonorDarahAdapter.My
     private Context context;
     private ArrayList<DataDonorDarah> data;
     private LayoutInflater inflater;
-    private int previousPosition;
+    private DonorDarahActivity donorDarahActivity = new DonorDarahActivity();
 
-    public DonorDarahAdapter(Context context, ArrayList<DataDonorDarah> data){
+    public DonorDarahAdapter(Context context, ArrayList<DataDonorDarah> data) {
         this.context = context;
         this.data = data;
         inflater = LayoutInflater.from(context);
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView rowPenerimaDonor, rowDeskripsiDonor;
+        TextView rowPenerimaDonor, rowDeskripsiDonor, rowOptionRecylerView;
         ImageView rowImagePenerimaDonor;
 
-
-        public MyViewHolder(View itemView){
+        public MyViewHolder(View itemView) {
             super(itemView);
 
             rowPenerimaDonor = itemView.findViewById(R.id.rowPenerimaDonorDarah);
             rowDeskripsiDonor = itemView.findViewById(R.id.rowDescDonorDarah);
             rowImagePenerimaDonor = itemView.findViewById(R.id.rowImDonorDarah);
+            rowOptionRecylerView = itemView.findViewById(R.id.rowOptionRecyclerView);
         }
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int position){
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int position) {
         View view = inflater.inflate(R.layout.row_donor_darah, parent, false);
 
         MyViewHolder holder = new MyViewHolder(view);
@@ -56,62 +56,52 @@ public class DonorDarahAdapter extends RecyclerView.Adapter<DonorDarahAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder myViewHolder, final int position){
+    public void onBindViewHolder(final MyViewHolder myViewHolder, final int position) {
 
         myViewHolder.rowPenerimaDonor.setText(data.get(position).getPenerimaDonor());
         myViewHolder.rowDeskripsiDonor.setText(data.get(position).getDeskripsiDonor());
         myViewHolder.rowImagePenerimaDonor.setImageResource(0);
 
-        if(position > previousPosition){
-            AnimationUtil.animate(myViewHolder, true);
-        }
-        else{
-            AnimationUtil.animate(myViewHolder, false);
-        }
+        myViewHolder.rowOptionRecylerView.setOnClickListener(new View.OnClickListener() {
 
-        previousPosition = position;
+            @Override
+            public void onClick(View v) {
 
-        final int currentPosition = position;
-        final DataDonorDarah infoData = data.get(position);
+                PopupMenu popupMenu = new PopupMenu(context, myViewHolder.rowOptionRecylerView);
+                popupMenu.inflate(R.menu.option_recycler_view);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
-        myViewHolder.rowImagePenerimaDonor.setOnClickListener(
-                new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, DonorDarahDetail.class);
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.option_detail:
+                                Intent intent = new Intent(context, DonorDarahDetail.class);
 
-                        intent.putExtra("Penerima Donor", data.get(position).getPenerimaDonor());
-                        intent.putExtra("Deskripsi Donor", data.get(position).getDeskripsiDonor());
-                        intent.putExtra("Golongan Darah", data.get(position).getGolDarahDonor());
-                        intent.putExtra("Jumlah Donor", String.valueOf(data.get(position).getJumlahDonor()));
+                                intent.putExtra("Penerima Donor", data.get(position).getPenerimaDonor());
+                                intent.putExtra("Deskripsi Donor", data.get(position).getDeskripsiDonor());
+                                intent.putExtra("Golongan Darah", data.get(position).getGolDarahDonor());
+                                intent.putExtra("Jumlah Donor", String.valueOf(data.get(position).getJumlahDonor()));
 
-                        context.startActivity(intent);
+                                context.startActivity(intent);
+                                break;
+                            case R.id.option_update:
+                                break;
+                            case R.id.option_delete:
+                                donorDarahActivity.deleteData(data.get(position).getId());
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
                     }
-                }
-        );
-
-        myViewHolder.rowImagePenerimaDonor.setOnLongClickListener(
-                new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        Toast.makeText(context, "Donor Darah Berhasil dihapus", Toast.LENGTH_SHORT).show();
-
-                        removeItem(infoData);
-
-                        return true;
-                    }
-                }
-        );
+                });
+                popupMenu.show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return data.size();
-    }
-
-    private void removeItem(DataDonorDarah dataDonorDarah){
-        int currPosition = data.indexOf(dataDonorDarah);
-        data.remove(currPosition);
-        notifyItemRemoved(currPosition);
     }
 }

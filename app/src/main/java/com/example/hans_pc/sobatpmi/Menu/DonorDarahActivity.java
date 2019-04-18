@@ -35,6 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class DonorDarahActivity extends AppCompatActivity {
 
@@ -47,19 +48,23 @@ public class DonorDarahActivity extends AppCompatActivity {
     private DonorDarahAdapter donorDarahAdapter;
     private ArrayList<DataDonorDarah> data = new ArrayList<>();
 
-    private FirebaseFirestore dbFirestore;
+    FirebaseFirestore dbFirestore;
 
     LayoutInflater inflater;
     View dialogView;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_darah);
 
+        progressDialog = new ProgressDialog(DonorDarahActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+
         recyclerView = findViewById(R.id.recycleViewDonorDarah);
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(DonorDarahActivity.this));
 
         dbFirestore = FirebaseFirestore.getInstance();
@@ -77,47 +82,6 @@ public class DonorDarahActivity extends AppCompatActivity {
                 CustomDialogDonorDarah();
             }
         });
-    }
-
-    private void showData() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(DonorDarahActivity.this,
-                R.style.AppTheme_Dark_Dialog);
-        ;
-
-        progressDialog.setMessage("Loading data...");
-        progressDialog.show();
-
-        dbFirestore.collection("list_donordarah").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (DocumentSnapshot doc : task.getResult()) {
-                            DataDonorDarah dataDonorDarah = new DataDonorDarah(
-                                    doc.getString("penerimaDonor"),
-                                    doc.getString("deskripsiDonor"),
-                                    doc.getString("golDarahDonor"),
-                                    doc.getDouble("jumlahDonor").intValue());
-                            data.add(dataDonorDarah);
-                        }
-
-                        donorDarahAdapter = new DonorDarahAdapter(DonorDarahActivity.this, data);
-                        recyclerView.setAdapter(donorDarahAdapter);
-
-                        progressDialog.dismiss();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-
-                        Toast.makeText(DonorDarahActivity.this, e.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                        clear();
-                    }
-                });
     }
 
     private void CustomDialogDonorDarah() {
@@ -159,22 +123,15 @@ public class DonorDarahActivity extends AppCompatActivity {
         String deskripsi_donor = input_deskripsiDonor.getText().toString();
         int jumlah_donor = Integer.parseInt(input_jumlahDonor.getText().toString());
         String golongan_darah = input_golonganDonorDarah.getSelectedItem().toString();
+        String id = UUID.randomUUID().toString();
 
-        CollectionReference dbReference = dbFirestore.collection("list_donordarah");
-
-        final DataDonorDarah current = new DataDonorDarah(penerima_donor, deskripsi_donor, golongan_darah,
+        final DataDonorDarah current = new DataDonorDarah(id, penerima_donor, deskripsi_donor, golongan_darah,
                 jumlah_donor);
 
-        current.setPenerimaDonor(penerima_donor);
-        current.setDeskripsiDonor(deskripsi_donor);
-        current.setJumlahDonor(jumlah_donor);
-        current.setGolDarahDonor(golongan_darah);
-
-        dbReference.add(current).addOnCompleteListener(
-                new OnCompleteListener<DocumentReference>() {
+        dbFirestore.collection("list_donordarah").document(id).set(current)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-
+                    public void onComplete(@NonNull Task<Void> task) {
                         data.add(current);
 
                         donorDarahAdapter = new DonorDarahAdapter(DonorDarahActivity.this, data);
@@ -182,10 +139,8 @@ public class DonorDarahActivity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(), "Kebutuhan Donor Darah Berhasil Ditambahkan",
                                 Toast.LENGTH_SHORT).show();
-
                     }
-                }
-        ).addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getApplicationContext(), "Kebutuhan Donor Darah Gagal Ditambahkan",
@@ -193,6 +148,77 @@ public class DonorDarahActivity extends AppCompatActivity {
             }
         });
 
+        current.setId(id);
+        current.setPenerimaDonor(penerima_donor);
+        current.setDeskripsiDonor(deskripsi_donor);
+        current.setJumlahDonor(jumlah_donor);
+        current.setGolDarahDonor(golongan_darah);
+    }
+
+    private void showData() {
+
+        progressDialog.setMessage("Loading data...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        dbFirestore.collection("list_donordarah").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        data.clear();
+                        for (DocumentSnapshot doc : task.getResult()) {
+                            DataDonorDarah dataDonorDarah = new DataDonorDarah(
+                                    doc.getString("id"),
+                                    doc.getString("penerimaDonor"),
+                                    doc.getString("deskripsiDonor"),
+                                    doc.getString("golDarahDonor"),
+                                    doc.getDouble("jumlahDonor").intValue());
+                            data.add(dataDonorDarah);
+                        }
+
+                        donorDarahAdapter = new DonorDarahAdapter(DonorDarahActivity.this, data);
+                        recyclerView.setAdapter(donorDarahAdapter);
+
+                        progressDialog.dismiss();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+
+                        Toast.makeText(DonorDarahActivity.this, e.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        clear();
+                    }
+                });
+    }
+
+    public void deleteData(String documentName){
+        dbFirestore = FirebaseFirestore.getInstance();
+
+        dbFirestore.collection("list_donordarah").document(documentName)
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                        {
+                            Toast.makeText(DonorDarahActivity.this,
+                                    "Deleted", Toast.LENGTH_SHORT).show();
+                            showData();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DonorDarahActivity.this,
+                                e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void clear() {

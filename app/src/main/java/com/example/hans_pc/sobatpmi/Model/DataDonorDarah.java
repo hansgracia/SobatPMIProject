@@ -2,14 +2,27 @@ package com.example.hans_pc.sobatpmi.Model;
 
 public class DataDonorDarah {
 
-    String penerimaDonor, deskripsiDonor, golDarahDonor, gambarDonor;
+    String id;
+    String penerimaDonor;
+    String deskripsiDonor;
+    String golDarahDonor;
+    String gambarDonor;
     int jumlahDonor;
 
-    public DataDonorDarah(String penerimaDonor, String deskripsiDonor, String golDarahDonor, int jumlahDonor) {
+    public DataDonorDarah(String id, String penerimaDonor, String deskripsiDonor, String golDarahDonor, int jumlahDonor) {
+        this.id = id;
         this.penerimaDonor = penerimaDonor;
         this.deskripsiDonor = deskripsiDonor;
         this.golDarahDonor = golDarahDonor;
         this.jumlahDonor = jumlahDonor;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPenerimaDonor() {
