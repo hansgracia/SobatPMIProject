@@ -1,5 +1,6 @@
 package com.example.hans_pc.sobatpmi.Adapter;
 
+<<<<<<< HEAD
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -59,4 +60,7 @@ public class LokasiPMIAdapter extends RecyclerView.Adapter<LokasiPMIAdapter.MyVi
     public int getItemCount() {
         return data.size();
     }
+=======
+public class LokasiPMIAdapter {
+>>>>>>> 8a0b512842f359dc3e2ac0770e1bd99d6a8f1432
 }

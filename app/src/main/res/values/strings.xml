@@ -28,6 +28,10 @@
     <string name="sign_in">SIGN IN</string>
     <string name="my_dashboard">My Dashboard</string>
     <string name="donor_darah">Donor Darah</string>
+<<<<<<< HEAD
+=======
+    <string name="lokasi_pmi">Lokasi PMI</string>
+>>>>>>> 8a0b512842f359dc3e2ac0770e1bd99d6a8f1432
     <string name="kegiatan">Kegiatan</string>
     <string name="informasi_umum">Informasi Umum</string>
     <string name="profil">Profil</string>
@@ -49,6 +53,9 @@
     <string name="info4">Larangan bagi Pendonor darah</string>
     <string name="info5">Golongan Darah dan rhesus</string>
     <string name="back">BACK</string>
+<<<<<<< HEAD
     <string name="nama_lokasi_pmi">Nama Lokasi PMI</string>
     <string name="lokasi_pmi">Lokasi PMI</string>
+=======
+>>>>>>> 8a0b512842f359dc3e2ac0770e1bd99d6a8f1432
 </resources>
