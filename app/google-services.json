@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "745791498394",
+    "firebase_url": "https://sobat-pmi-project.firebaseio.com",
+    "project_id": "sobat-pmi-project",
+    "storage_bucket": "sobat-pmi-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745791498394:android:a23c65911a480b72",
+        "android_client_info": {
+          "package_name": "com.example.hans_pc.sobatpmi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745791498394-n92ib2srakjpene1kvbens5kgtc7lpr8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl2j_Y6UDR7WTjBOPa7dPpXeMiyWZmRHQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

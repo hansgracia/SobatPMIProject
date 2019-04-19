@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">SobatPMI</string>
+    <string name="facebook_app_id">321501258497600</string>
+    <string name="fb_login_protocol_scheme">fb321501258497600</string>
+    <string name="logo_sobat_pmi">Logo Sobat PMI</string>
+    <string name="sobat_pmi">Sobat PMI</string>
+    <string name="username_or_email">Username or Email</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="or">OR</string>
+    <string name="login_with_facebook">LOGIN WITH FACEBOOK</string>
+    <string name="login_with_gmail">LOGIN WITH GMAIL</string>
+    <string name="input_minimum_password">INPUT MINIMUM PASSWORD</string>
+    <string name="name_label_text">Name</string>
+    <string name="enter_name_hint">Enter your Name</string>
+    <string name="username_label_text">Username</string>
+    <string name="enter_username_hint">Enter username</string>
+    <string name="phone_label_text">Phone</string>
+    <string name="enter_phone_hint">Enter phone</string>
+    <string name="email_label_text">Email</string>
+    <string name="enter_email_hint">Enter Email</string>
+    <string name="password_label_text">Password</string>
+    <string name="enter_password_hint">Enter Password</string>
+    <string name="signup_label_text">SIGN UP</string>
+    <string name="jeniskelamin_label_text">Jenis Kelamin</string>
+    <string name="enter_JenisKelamin_hint">Pilih Jenis kelamin</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="my_dashboard">My Dashboard</string>
+    <string name="donor_darah">Donor Darah</string>
+    <string name="kegiatan">Kegiatan</string>
+    <string name="informasi_umum">Informasi Umum</string>
+    <string name="profil">Profil</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_donor_darah">DonorDarahActivity</string>
+
+    <string-array name="golongan_darah">
+        <item name="golA">A</item>
+        <item name="golB">B</item>
+        <item name="golAB">AB</item>
+        <item name="golO">O</item>
+    </string-array>
+
+    <string name="title_activity_info_umum">InfoUmumActivity</string>
+    <string name="info_umum">INFO UMUM</string>
+    <string name="info1">Tata Cara Donor Darah</string>
+    <string name="info2">Syarat Donor Darah</string>
+    <string name="info3">Keuntungan Donor Darah</string>
+    <string name="info4">Larangan bagi Pendonor darah</string>
+    <string name="info5">Golongan Darah dan rhesus</string>
+    <string name="back">BACK</string>
+    <string name="nama_lokasi_pmi">Nama Lokasi PMI</string>
+    <string name="lokasi_pmi">Lokasi PMI</string>
+</resources>
