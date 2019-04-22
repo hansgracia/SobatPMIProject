@@ -46,8 +46,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    FirebaseAuth.AuthStateListener firebaseAuthListener;
-
     CallbackManager mCallBackManager;
 
     @Override
@@ -65,22 +63,13 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    goMainScreen();
-                }
-            }
-        };
-
         mCallBackManager = CallbackManager.Factory.create();
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                finish();
             }
         });
 
@@ -154,11 +143,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void clear() {
-        textUsername.setText(null);
-        textPassword.setText(null);
-    }
-
     private void signInFacebook() {
         buttonLoginFacebook.registerCallback(mCallBackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -177,7 +161,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
@@ -199,20 +182,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void goMainScreen() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mCallBackManager.onActivityResult(requestCode, resultCode, data);
-
-    }
-
     private void printKeyHash() {
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(
@@ -226,6 +195,33 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void clear() {
+        textUsername.setText(null);
+        textPassword.setText(null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallBackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(firebaseAuth.getCurrentUser() != null){
+            goMainScreen();
         }
     }
 }

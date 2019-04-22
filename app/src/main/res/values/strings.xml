@@ -28,10 +28,7 @@
     <string name="sign_in">SIGN IN</string>
     <string name="my_dashboard">My Dashboard</string>
     <string name="donor_darah">Donor Darah</string>
-<<<<<<< HEAD
-=======
     <string name="lokasi_pmi">Lokasi PMI</string>
->>>>>>> 8a0b512842f359dc3e2ac0770e1bd99d6a8f1432
     <string name="kegiatan">Kegiatan</string>
     <string name="informasi_umum">Informasi Umum</string>
     <string name="profil">Profil</string>
@@ -53,9 +50,19 @@
     <string name="info4">Larangan bagi Pendonor darah</string>
     <string name="info5">Golongan Darah dan rhesus</string>
     <string name="back">BACK</string>
-<<<<<<< HEAD
     <string name="nama_lokasi_pmi">Nama Lokasi PMI</string>
-    <string name="lokasi_pmi">Lokasi PMI</string>
-=======
->>>>>>> 8a0b512842f359dc3e2ac0770e1bd99d6a8f1432
+    <string name="title_activity_lokasi_pmidetail">Map</string>
+    <string name="isi_informasi">Isi Informasi</string>
+    <string name="tanggal_pembuatan_informasi">Tanggal Pembuatan Informasi</string>
+    <string name="tanggal_informasi">Tanggal Informasi</string>
+    <string name="choose_camera_for_your_profile_image">Choose camera for your profile image</string>
+    <string name="enter_your_display_name">Enter your display name</string>
+    <string name="submit_info">Submit Info</string>
+    <string name="edit_profil">EDIT PROFIL</string>
+    <string name="riwayat_donor">Riwayat Donor</string>
+    <string name="display_name">Display Name</string>
+    <string name="jumlah_riwayat">jumlah riwayat</string>
+    <string name="tanggal_bergabung">Tanggal Bergabung</string>
+    <string name="email_dari_user_nantinya">Email dari user nantinya</string>
+    <string name="password_dari_user_nantinya">Password dari user nantinya</string>
 </resources>

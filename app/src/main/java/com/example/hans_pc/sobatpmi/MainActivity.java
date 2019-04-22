@@ -9,6 +9,8 @@ import android.view.View;
 import com.example.hans_pc.sobatpmi.AccountActivity.LoginActivity;
 import com.example.hans_pc.sobatpmi.Menu.DonorDarahActivity;
 import com.example.hans_pc.sobatpmi.Menu.InformasiUmumActivity;
+import com.example.hans_pc.sobatpmi.Menu.LokasiPMIActivity;
+import com.example.hans_pc.sobatpmi.Menu.ProfilActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private GoogleSignInAccount mGoogleSignInClient;
-    CardView donorDarahMenu, logoutMenu, infoUmumMenu;
+    CardView donorDarahMenu, logoutMenu, infoUmumMenu, lokasiPMIMenu, profilMenu, kegiatanMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +26,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         donorDarahMenu = findViewById(R.id.donorDarahMenu);
+        lokasiPMIMenu = findViewById(R.id.lokasiMenu);
         infoUmumMenu = findViewById(R.id.infoUmumMenu);
         logoutMenu = findViewById(R.id.logoutMenu);
+        profilMenu = findViewById(R.id.profilMenu);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -33,7 +37,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, DonorDarahActivity.class));
-                finish();
+            }
+        });
+
+        lokasiPMIMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LokasiPMIActivity.class));
             }
         });
 
@@ -41,9 +51,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, InformasiUmumActivity.class));
-                finish();
             }
         });
+
+        profilMenu.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, ProfilActivity.class));
+                    }
+                }
+        );
 
         logoutMenu.setOnClickListener(new View.OnClickListener() {
             @Override
