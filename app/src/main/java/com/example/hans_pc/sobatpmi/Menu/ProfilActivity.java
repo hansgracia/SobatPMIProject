@@ -1,7 +1,6 @@
 package com.example.hans_pc.sobatpmi.Menu;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,22 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
 import com.example.hans_pc.sobatpmi.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
-
 public class ProfilActivity extends AppCompatActivity {
 
     private ImageView gambar_profil;
@@ -84,9 +76,8 @@ public class ProfilActivity extends AppCompatActivity {
             }
         }
 
-        final StorageReference storageReference = FirebaseStorage.getInstance().
-                getReference("profilepics/" + firebaseUser.getEmail() + ".jpg"
-                );
+        final StorageReference storageReference = FirebaseStorage.getInstance()
+                .getReference("profilepics/" + firebaseUser.getEmail() + ".jpg");
 
         storageReference.getDownloadUrl().addOnSuccessListener(
                 new OnSuccessListener<Uri>() {

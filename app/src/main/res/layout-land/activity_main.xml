@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@drawable/person"
+                android:src="@drawable/camera_icon"
                 android:layout_alignParentRight="true"
                 android:layout_width="62dp"
                 android:layout_height="62dp" />

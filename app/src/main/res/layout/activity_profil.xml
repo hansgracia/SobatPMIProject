@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:background="@drawable/gradientbackground"
+            android:background="@xml/gradientbackground"
             android:layout_width="match_parent"
             android:layout_height="265dp"
             android:orientation="vertical">
@@ -190,10 +190,10 @@
     <Button
         android:id="@+id/buttonEditProfil"
         android:textColor="#fff"
-        android:background="@drawable/button_style_gradient"
+        android:background="@xml/button_style_gradient"
         android:layout_marginTop="35dp"
         android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/edit_profil"/>
 
