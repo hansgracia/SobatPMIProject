@@ -19,28 +19,34 @@
             android:layout_marginTop="50dp"
             android:padding="10dp"
             android:text="@string/tanggal_informasi_detail"
-            android:textColor="@color/graylight"
-            />
+            android:textColor="@color/graylight" />
 
     </LinearLayout>
 
     <TextView
+        android:textColor="@color/colorPrimary"
         android:id="@+id/namaDetailInformasi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nama_informasi_detail"
-        android:padding="10dp"
         android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:text="@string/nama_informasi_detail"
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/isiDetailInformasi"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:textSize="15sp"
-        android:text="@string/isi_informasi_detail" />
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/isiDetailInformasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="@string/isi_informasi_detail"
+            android:textSize="15sp" />
+
+    </ScrollView>
 
 </LinearLayout>
