@@ -1,6 +1,7 @@
 package com.example.hans_pc.sobatpmi.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.hans_pc.sobatpmi.Detail.InformasiUmumDetail;
 import com.example.hans_pc.sobatpmi.Menu.InformasiUmumActivity;
 import com.example.hans_pc.sobatpmi.Model.DataInformasiUmum;
 import com.example.hans_pc.sobatpmi.R;
@@ -54,7 +56,7 @@ public class InformasiUmumAdapter extends RecyclerView.Adapter<InformasiUmumAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
 
         myViewHolder.row_namaInformasi.setText(data.get(position).getNamaInformasi());
         myViewHolder.row_isiInformasi.setText(data.get(position).getIsiInformasi());
@@ -64,7 +66,11 @@ public class InformasiUmumAdapter extends RecyclerView.Adapter<InformasiUmumAdap
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(v.getContext(), InformasiUmumDetail.class);
+                        intent.putExtra("Nama Informasi Detail", data.get(position).getNamaInformasi());
+                        intent.putExtra("Isi Informasi Detail", data.get(position).getIsiInformasi());
+                        intent.putExtra("Tanggal Informasi Detail", data.get(position).getTanggalInformasi());
+                        context.startActivity(intent);
                     }
                 }
         );

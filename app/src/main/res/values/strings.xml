@@ -65,4 +65,8 @@
     <string name="tanggal_bergabung">Tanggal Bergabung</string>
     <string name="email_dari_user_nantinya">Email dari user nantinya</string>
     <string name="password_dari_user_nantinya">Password dari user nantinya</string>
+    <string name="nama_informasi_detail">Nama Informasi Detail</string>
+    <string name="tanggal_informasi_detail">Tanggal Informasi Detail</string>
+    <string name="nama_informasi">Nama Informasi</string>
+    <string name="isi_informasi_detail">Isi Informasi Detail</string>
 </resources>

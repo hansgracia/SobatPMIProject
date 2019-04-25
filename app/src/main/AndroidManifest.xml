@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Menu.ProfilActivity"></activity>
+        <activity android:name=".Detail.InformasiUmumDetail"></activity>
+        <activity android:name=".Menu.ProfilActivity" />
         <activity android:name=".AccountActivity.AddUserInfoActivity" />
 
         <meta-data

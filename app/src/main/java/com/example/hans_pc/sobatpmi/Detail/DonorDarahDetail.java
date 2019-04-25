@@ -13,6 +13,7 @@ public class DonorDarahDetail extends AppCompatActivity {
 
     ImageView gambar_detailDonorDarah;
     TextView penerima_detailDonorDarah, desc_detailDonorDarah, gol_detailDonorDarah, jumlah_detailDonorDarah;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class DonorDarahDetail extends AppCompatActivity {
         gol_detailDonorDarah = findViewById(R.id.golDetailDonorDarah);
         jumlah_detailDonorDarah = findViewById(R.id.jumlahDetailDonorDarah);
 
-        Intent i = getIntent();
+        i = getIntent();
 
         penerima_detailDonorDarah.setText(i.getStringExtra("Penerima Donor"));
         desc_detailDonorDarah.setText(i.getStringExtra("Deskripsi Donor"));
