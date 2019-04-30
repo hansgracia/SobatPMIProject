@@ -44,27 +44,28 @@ public class MainActivity extends AppCompatActivity {
 
         loadImageProfil();
 
+        //method button untuk menu donor darah
         donorDarahMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, DonorDarahActivity.class));
             }
         });
-
+        //method button untuk menu lokasi PMI
         lokasiPMIMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, LokasiPMIActivity.class));
             }
         });
-
+        //method button untuk menu informasi umum
         infoUmumMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, InformasiUmumActivity.class));
             }
         });
-
+        //method button untuk menu profil
         profilMenu.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-
+        //method button untuk logout
         logoutMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    //method untuk load image dari profil
     private void loadImageProfil() {
 
         final FirebaseUser user = firebaseAuth.getCurrentUser();
