@@ -76,7 +76,7 @@ public class DonorDarahActivity extends AppCompatActivity {
             }
         });
     }
-
+    //method untuk costumer dialog donor darah
     private void CustomDialogDonorDarah() {
 
         dialog = new AlertDialog.Builder(DonorDarahActivity.this);
@@ -110,7 +110,7 @@ public class DonorDarahActivity extends AppCompatActivity {
 
         dialog.show();
     }
-
+    //method untuk menambah donor darah
     private void addDonorDarah() {
         String penerima_donor = input_penerimaDonor.getText().toString().trim();
         String deskripsi_donor = input_deskripsiDonor.getText().toString();
@@ -147,7 +147,7 @@ public class DonorDarahActivity extends AppCompatActivity {
         current.setJumlahDonor(jumlah_donor);
         current.setGolDarahDonor(golongan_darah);
     }
-
+    // method untuk melihat data donor darah
     private void showData() {
 
         progressDialog.setMessage("Loading data...");
@@ -188,7 +188,7 @@ public class DonorDarahActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    //method untuk delete data donor darah
     public void deleteData(String documentName){
         dbFirestore = FirebaseFirestore.getInstance();
 
@@ -213,7 +213,7 @@ public class DonorDarahActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    //method untuk clear data
     private void clear() {
         input_penerimaDonor.setText(null);
         input_deskripsiDonor.setText(null);
@@ -221,4 +221,20 @@ public class DonorDarahActivity extends AppCompatActivity {
         input_golonganDonorDarah.setSelection(0);
     }
 
+    public void updatedonor(View view) {
+        string donor;
+        Log.d("EDIT", edJudul.getText().toString());
+        donor.setId(id);
+        donor.setTitle(edJudul.getText().toString());
+        donor.setAuthor(edAuthor.getText().toString());
+        donor.setCreated(edDate.getText().toString());
+        donor.setDesc(edDesc.getText().toString());
+        db.updateArtikelById(donor);
+        Intent intent = new Intent(EditArtikel.this, ViewArtikel.class);
+        startActivity(intent);
+        db.close();
+        Log.d("EDITARTICLE", artikel.getId().toString());
+        finish();
+
+    }
 }
