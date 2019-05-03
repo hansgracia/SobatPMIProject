@@ -81,6 +81,7 @@ public class DonorDarahAdapter extends RecyclerView.Adapter<DonorDarahAdapter.My
                                 intent.putExtra("Deskripsi Donor", data.get(position).getDeskripsiDonor());
                                 intent.putExtra("Golongan Darah", data.get(position).getGolDarahDonor());
                                 intent.putExtra("Jumlah Donor", String.valueOf(data.get(position).getJumlahDonor()));
+                                intent.putExtra("ID Donor", data.get(position).getId());
 
                                 context.startActivity(intent);
                                 break;

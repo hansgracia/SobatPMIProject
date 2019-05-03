@@ -112,6 +112,7 @@ public class DonorDarahActivity extends AppCompatActivity {
     }
     //method untuk menambah donor darah
     private void addDonorDarah() {
+
         String penerima_donor = input_penerimaDonor.getText().toString().trim();
         String deskripsi_donor = input_deskripsiDonor.getText().toString();
         int jumlah_donor = Integer.parseInt(input_jumlahDonor.getText().toString());
@@ -190,7 +191,6 @@ public class DonorDarahActivity extends AppCompatActivity {
     }
     //method untuk delete data donor darah
     public void deleteData(String documentName){
-        dbFirestore = FirebaseFirestore.getInstance();
 
         dbFirestore.collection("list_donordarah").document(documentName)
                 .delete()
@@ -213,6 +213,7 @@ public class DonorDarahActivity extends AppCompatActivity {
                     }
                 });
     }
+
     //method untuk clear data
     private void clear() {
         input_penerimaDonor.setText(null);

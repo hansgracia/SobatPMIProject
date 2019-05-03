@@ -1,6 +1,7 @@
 package com.example.hans_pc.sobatpmi.Menu;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +13,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hans_pc.sobatpmi.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 public class ProfilActivity extends AppCompatActivity {
 
     private ImageView gambar_profil;
@@ -27,7 +34,11 @@ public class ProfilActivity extends AppCompatActivity {
 
     private Button button_editProfil;
 
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth dbAuth;
+    private FirebaseFirestore dbFirestore;
+    private FirebaseUser dbUser;
+
+    private String sEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +46,8 @@ public class ProfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        dbAuth = FirebaseAuth.getInstance();
+        dbFirestore = FirebaseFirestore.getInstance();
 
         gambar_profil = findViewById(R.id.gambarProfil);
         display_nameProfil = findViewById(R.id.displayNameProfil);
@@ -45,6 +57,9 @@ public class ProfilActivity extends AppCompatActivity {
         password_profil = findViewById(R.id.passwordProfil);
         button_editProfil = findViewById(R.id.buttonEditProfil);
         progressbar_profil = findViewById(R.id.progressbarProfil);
+
+        dbUser = dbAuth.getCurrentUser();
+        sEmail = dbUser.getEmail();
 
         loadProfilInformation();
 
@@ -57,27 +72,39 @@ public class ProfilActivity extends AppCompatActivity {
                 }
         );
 
+        jumlah_riwayatProfil.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadRiwayatInformation();
+                    }
+                }
+        );
+    }
+
+    private void loadRiwayatInformation() {
+
     }
 
     private void loadProfilInformation() {
 
         progressbar_profil.setVisibility(View.VISIBLE);
 
-        final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (dbUser != null) {
 
-        if (firebaseUser != null) {
-
-            if (firebaseUser.getDisplayName() != null) {
-                display_nameProfil.setText(firebaseUser.getDisplayName());
+            if (dbUser.getDisplayName() != null) {
+                display_nameProfil.setText(dbUser.getDisplayName());
             }
 
-            if (firebaseUser.getEmail() != null) {
-                email_profil.setText(firebaseUser.getEmail());
+            if (sEmail != null) {
+                email_profil.setText(dbUser.getEmail());
             }
         }
 
+        loadJumlahRiwayatInformation();
+
         final StorageReference storageReference = FirebaseStorage.getInstance()
-                .getReference("profilepics/" + firebaseUser.getEmail() + ".jpg");
+                .getReference("profilepics/" + dbUser.getEmail() + ".jpg");
 
         storageReference.getDownloadUrl().addOnSuccessListener(
                 new OnSuccessListener<Uri>() {
@@ -93,5 +120,27 @@ public class ProfilActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void loadJumlahRiwayatInformation() {
+        if (!dbUser.getEmail().isEmpty()) {
+
+            dbFirestore.collection("list_bantudonor").whereEqualTo("email", sEmail).get()
+                    .addOnSuccessListener(
+                            new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    int jumlahDocument = queryDocumentSnapshots.size();
+                                    if(jumlahDocument <= 0){
+                                        jumlah_riwayatProfil.setText("0");
+                                        jumlah_riwayatProfil.setTextColor(getResources().getColor(R.color.red));
+                                    }
+                                    else{
+                                        jumlah_riwayatProfil.setText(String.valueOf(jumlahDocument));
+                                    }
+                                }
+                            }
+                    );
+        }
     }
 }

@@ -61,7 +61,6 @@
     <string name="edit_profil">EDIT PROFIL</string>
     <string name="riwayat_donor">Riwayat Donor</string>
     <string name="display_name">Display Name</string>
-    <string name="jumlah_riwayat">jumlah riwayat</string>
     <string name="tanggal_bergabung">Tanggal Bergabung</string>
     <string name="email_dari_user_nantinya">Email dari user nantinya</string>
     <string name="password_dari_user_nantinya">Password dari user nantinya</string>
@@ -69,4 +68,10 @@
     <string name="tanggal_informasi_detail">Tanggal Informasi Detail</string>
     <string name="nama_informasi">Nama Informasi</string>
     <string name="isi_informasi_detail">Isi Informasi Detail</string>
+    <string name="jumlah_golongan_darah">Jumlah golongan darah</string>
+    <string name="detail_golongan_darah">Detail golongan darah</string>
+    <string name="lokasi">Lokasi</string>
+    <string name="kekurangan_stok_darah">Kekurangan Stok Darah</string>
+    <string name="golongan_darah">Golongan Darah</string>
+    <string name="bantu_donor_darah">Bantu Donor Darah</string>
 </resources>
