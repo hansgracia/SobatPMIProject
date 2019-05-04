@@ -2,12 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/buttonCusDialDonorDarah"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
+    <ImageView
+        android:id="@+id/buttonImageAddCusDialDonorDarah"
+        android:layout_width="200dp"
+        android:layout_height="180dp"
+        android:background="@drawable/camera_icon"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitCenter"
         android:layout_margin="10dp" />
 
     <LinearLayout
@@ -21,20 +24,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Masukkan nama pihak penerima/butuh donor darah"
-            android:textSize="12sp" />
+            android:background="@xml/edittext_style"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:padding="8dp"/>
 
         <EditText
             android:id="@+id/inputDescCusDialDonorDarah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@xml/edittext_style"
             android:hint="Masukkan deskripsi donor darah"
-            android:textSize="12sp"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:padding="8dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="5dp">
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -42,8 +55,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
                 android:layout_marginEnd="4dp"
+                android:textColor="@color/black"
                 android:text="Golongan Darah"
-                android:textSize="12sp"/>
+                android:textSize="16sp"/>
 
             <Spinner
                 android:id="@+id/spinnerGolCusDialDonorDarah"
@@ -51,7 +65,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
                 android:layout_marginEnd="4dp"
-                android:textSize="12sp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:entries="@array/golongan_darah" />
 
             <EditText
@@ -60,11 +76,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
                 android:layout_marginEnd="4dp"
-                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:layout_marginLeft="15dp"
                 android:inputType="number"
                 android:hint="Jumlah" />
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 
