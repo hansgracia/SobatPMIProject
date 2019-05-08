@@ -2,18 +2,25 @@ package com.example.hans_pc.sobatpmi.Menu;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.hans_pc.sobatpmi.Adapter.RiwayatProfilAdapter;
+import com.example.hans_pc.sobatpmi.Model.DataRiwayatProfil;
 import com.example.hans_pc.sobatpmi.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -37,6 +46,14 @@ public class ProfilActivity extends AppCompatActivity {
     private FirebaseAuth dbAuth;
     private FirebaseFirestore dbFirestore;
     private FirebaseUser dbUser;
+
+    private LayoutInflater inflater;
+    private View dialogView;
+
+    private RiwayatProfilAdapter riwayatProfilAdapter;
+    ArrayList<DataRiwayatProfil> data;
+
+    private ListView riwayatListView;
 
     private String sEmail;
 
@@ -83,7 +100,43 @@ public class ProfilActivity extends AppCompatActivity {
     }
 
     private void loadRiwayatInformation() {
+        AlertDialog.Builder cdialog = new AlertDialog.Builder(ProfilActivity.this);
 
+        inflater = getLayoutInflater();
+
+        dialogView = inflater.inflate(R.layout.cdialog_riwayat_profil, null);
+
+        cdialog.setView(dialogView);
+        cdialog.setCancelable(true);
+        cdialog.setTitle("Riwayat Donor Darah");
+
+        data = new ArrayList<DataRiwayatProfil>();
+
+        dbFirestore.collection("list_bantudonor").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        data.clear();
+                        for(DocumentSnapshot doc : task.getResult()){
+                            DataRiwayatProfil dataRiwayatProfil = new DataRiwayatProfil(
+                                    doc.getString("date"),
+                                    doc.getString("namaPenerimaDonor")
+                            );
+                            data.add(dataRiwayatProfil);
+                        }
+                        riwayatProfilAdapter = new RiwayatProfilAdapter(ProfilActivity.this, data);
+                        riwayatListView = findViewById(R.id.riwayatProfilList);
+                        riwayatListView.setAdapter(riwayatProfilAdapter);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        tanggal_bergabungProfil.setText(e.getMessage());
+                    }
+                });
+
+        cdialog.show();
     }
 
     private void loadProfilInformation() {
@@ -102,6 +155,7 @@ public class ProfilActivity extends AppCompatActivity {
         }
 
         loadJumlahRiwayatInformation();
+        loadTanggalBergabung();
 
         final StorageReference storageReference = FirebaseStorage.getInstance()
                 .getReference("profilepics/" + dbUser.getEmail() + ".jpg");
@@ -120,6 +174,21 @@ public class ProfilActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void loadTanggalBergabung(){
+        dbFirestore.collection("list_profiluser").whereEqualTo("email_user", sEmail).get()
+                .addOnCompleteListener(
+                        new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                for(DocumentSnapshot doc: task.getResult()){
+                                    String sTanggalBergabung = doc.getString("date_join");
+                                    tanggal_bergabungProfil.setText(sTanggalBergabung);
+                                }
+                            }
+                        }
+                );
     }
 
     private void loadJumlahRiwayatInformation() {

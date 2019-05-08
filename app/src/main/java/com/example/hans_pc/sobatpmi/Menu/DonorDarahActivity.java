@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.hans_pc.sobatpmi.Adapter.DonorDarahAdapter;
 import com.example.hans_pc.sobatpmi.Model.DataDonorDarah;
 import com.example.hans_pc.sobatpmi.R;
@@ -38,8 +39,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 public class DonorDarahActivity extends AppCompatActivity {
@@ -63,8 +70,8 @@ public class DonorDarahActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private Uri uriImageProfile;
-    private String urlImageProfile;
+    private Uri uriImageDonorDarah;
+    private String urlImageDonorDarah;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +86,7 @@ public class DonorDarahActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(DonorDarahActivity.this));
 
         dbFirestore = FirebaseFirestore.getInstance();
+        dbAuth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,13 +114,6 @@ public class DonorDarahActivity extends AppCompatActivity {
         dialog.setView(dialogView);
         dialog.setCancelable(true);
         dialog.setTitle("Input Donor Darah");
-
-//        button_imagePenerimaDonor.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
         input_penerimaDonor = dialogView.findViewById(R.id.inputPenerimaCusDialDonorDarah);
         input_deskripsiDonor = dialogView.findViewById(R.id.inputDescCusDialDonorDarah);
@@ -144,13 +145,11 @@ public class DonorDarahActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CHOOSE_IMAGE && requestCode == RESULT_OK && data != null && data.getData() != null) {
-            uriImageProfile = data.getData();
+        if (requestCode == CHOOSE_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            uriImageDonorDarah = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriImageProfile);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriImageDonorDarah);
                 button_imageAddCusDialDonorDarah.setImageBitmap(bitmap);
-
-                uploadImageDonorDarah();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -164,19 +163,71 @@ public class DonorDarahActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "PREVIEW IMAGE FOR DONOR DARAH"), CHOOSE_IMAGE);
     }
 
-    private void uploadImageDonorDarah() {
-        dbUser = dbAuth.getCurrentUser();
-        final StorageReference storageReference = FirebaseStorage.getInstance()
-                .getReference("imagedonordarah/" + dbUser.getEmail() + ".jpg");
 
-        if(uriImageProfile != null){
-            storageReference.putFile(uriImageProfile).addOnSuccessListener(
+    //method untuk menambah donor darah
+    private void addDonorDarah() {
+
+        final String id = UUID.randomUUID().toString();
+        final String penerima_donor = input_penerimaDonor.getText().toString().trim();
+        final String deskripsi_donor = input_deskripsiDonor.getText().toString();
+        final int jumlah_donor = Integer.parseInt(input_jumlahDonor.getText().toString());
+        final String golongan_darah = input_golonganDonorDarah.getSelectedItem().toString();
+
+        Date date = Calendar.getInstance(TimeZone.getDefault()).getTime();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MMMMM-YYYY hh:mm:ss");
+        String sDate = dateFormat.format(date);
+
+        final StorageReference storageReference = FirebaseStorage.getInstance()
+                .getReference("imagedonordarah/" + sDate + ".jpg");
+
+        if (uriImageDonorDarah != null) {
+            storageReference.putFile(uriImageDonorDarah).addOnSuccessListener(
                     new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            urlImageProfile = storageReference.getDownloadUrl().toString();
-                            Toast.makeText(DonorDarahActivity.this, "Berhasil upload..",
-                                    Toast.LENGTH_SHORT).show();
+                            storageReference.getDownloadUrl().addOnSuccessListener(
+                                    new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+
+                                            final DataDonorDarah current = new DataDonorDarah(id, penerima_donor,
+                                                    deskripsi_donor, golongan_darah,
+                                                    jumlah_donor, uri.toString());
+
+                                            dbFirestore.collection("list_donordarah").document(id)
+                                                    .set(current)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            data.add(current);
+
+                                                            donorDarahAdapter = new DonorDarahAdapter(DonorDarahActivity.this, data);
+                                                            recyclerView.setAdapter(donorDarahAdapter);
+
+                                                            Toast.makeText(getApplicationContext(), "Kebutuhan Donor Darah Berhasil Ditambahkan",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getApplicationContext(), "Kebutuhan Donor Darah Gagal Ditambahkan",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+                                            current.setId(id);
+                                            current.setPenerimaDonor(penerima_donor);
+                                            current.setDeskripsiDonor(deskripsi_donor);
+                                            current.setJumlahDonor(jumlah_donor);
+                                            current.setGolDarahDonor(golongan_darah);
+
+                                            Toast.makeText(DonorDarahActivity.this, "Berhasil upload..",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                            );
                         }
                     }
             ).addOnFailureListener(
@@ -188,51 +239,20 @@ public class DonorDarahActivity extends AppCompatActivity {
                         }
                     }
             );
-        }
-    }
+            storageReference.getDownloadUrl().addOnSuccessListener(
+                    new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            uriImageDonorDarah = uri;
 
-    //method untuk menambah donor darah
-    private void addDonorDarah() {
-
-        String penerima_donor = input_penerimaDonor.getText().toString().trim();
-        String deskripsi_donor = input_deskripsiDonor.getText().toString();
-        int jumlah_donor = Integer.parseInt(input_jumlahDonor.getText().toString());
-        String golongan_darah = input_golonganDonorDarah.getSelectedItem().toString();
-        String id = UUID.randomUUID().toString();
-
-        final DataDonorDarah current = new DataDonorDarah(id, penerima_donor, deskripsi_donor, golongan_darah,
-                jumlah_donor);
-
-        dbFirestore.collection("list_donordarah").document(id).set(current)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        data.add(current);
-
-                        donorDarahAdapter = new DonorDarahAdapter(DonorDarahActivity.this, data);
-                        recyclerView.setAdapter(donorDarahAdapter);
-
-                        Toast.makeText(getApplicationContext(), "Kebutuhan Donor Darah Berhasil Ditambahkan",
-                                Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Kebutuhan Donor Darah Gagal Ditambahkan",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        current.setId(id);
-        current.setPenerimaDonor(penerima_donor);
-        current.setDeskripsiDonor(deskripsi_donor);
-        current.setJumlahDonor(jumlah_donor);
-        current.setGolDarahDonor(golongan_darah);
+            );
+        }
     }
 
     // method untuk melihat data donor darah
     private void showData() {
-
         progressDialog.setMessage("Loading data...");
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
@@ -249,7 +269,8 @@ public class DonorDarahActivity extends AppCompatActivity {
                                     doc.getString("penerimaDonor"),
                                     doc.getString("deskripsiDonor"),
                                     doc.getString("golDarahDonor"),
-                                    doc.getDouble("jumlahDonor").intValue());
+                                    doc.getDouble("jumlahDonor").intValue(),
+                                    doc.getString("gambarDonor"));
                             data.add(dataDonorDarah);
                         }
 

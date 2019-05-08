@@ -9,12 +9,14 @@ public class DataDonorDarah {
     String gambarDonor;
     int jumlahDonor;
 
-    public DataDonorDarah(String id, String penerimaDonor, String deskripsiDonor, String golDarahDonor, int jumlahDonor) {
+    public DataDonorDarah(String id, String penerimaDonor, String deskripsiDonor, String golDarahDonor,
+                          int jumlahDonor, String gambarDonor) {
         this.id = id;
         this.penerimaDonor = penerimaDonor;
         this.deskripsiDonor = deskripsiDonor;
         this.golDarahDonor = golDarahDonor;
         this.jumlahDonor = jumlahDonor;
+        this.gambarDonor = gambarDonor;
     }
 
     public String getId() {

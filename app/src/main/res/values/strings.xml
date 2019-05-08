@@ -74,4 +74,11 @@
     <string name="kekurangan_stok_darah">Kekurangan Stok Darah</string>
     <string name="golongan_darah">Golongan Darah</string>
     <string name="bantu_donor_darah">Bantu Donor Darah</string>
+    <string name="penerima_donor">Penerima Donor</string>
+    <string name="threedot">...</string>
+    <string name="jumlah">Jumlah</string>
+    <string name="detail">Detail</string>
+    <string name="nama_penerima_donor">Nama Penerima Donor</string>
+    <string name="date_riwayat_profil">Date Riwayat Profil</string>
+    <string name="riwayat_profil">Riwayat Profil</string>
 </resources>

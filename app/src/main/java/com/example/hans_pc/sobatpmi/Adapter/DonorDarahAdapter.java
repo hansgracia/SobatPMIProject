@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.hans_pc.sobatpmi.Detail.DonorDarahDetail;
 import com.example.hans_pc.sobatpmi.Menu.DonorDarahActivity;
 import com.example.hans_pc.sobatpmi.Model.DataDonorDarah;
@@ -28,6 +29,7 @@ public class DonorDarahAdapter extends RecyclerView.Adapter<DonorDarahAdapter.My
     public DonorDarahAdapter(Context context, ArrayList<DataDonorDarah> data) {
         this.context = context;
         this.data = data;
+
         inflater = LayoutInflater.from(context);
     }
 
@@ -60,7 +62,9 @@ public class DonorDarahAdapter extends RecyclerView.Adapter<DonorDarahAdapter.My
 
         myViewHolder.rowPenerimaDonor.setText(data.get(position).getPenerimaDonor());
         myViewHolder.rowDeskripsiDonor.setText(data.get(position).getDeskripsiDonor());
-        myViewHolder.rowImagePenerimaDonor.setImageResource(0);
+
+        Glide.with(context).load(data.get(position).getGambarDonor()).fitCenter()
+                .into(myViewHolder.rowImagePenerimaDonor);
 
         myViewHolder.rowOptionRecylerView.setOnClickListener(new View.OnClickListener() {
 
@@ -82,6 +86,7 @@ public class DonorDarahAdapter extends RecyclerView.Adapter<DonorDarahAdapter.My
                                 intent.putExtra("Golongan Darah", data.get(position).getGolDarahDonor());
                                 intent.putExtra("Jumlah Donor", String.valueOf(data.get(position).getJumlahDonor()));
                                 intent.putExtra("ID Donor", data.get(position).getId());
+                                intent.putExtra("Gambar Donor", data.get(position).getGambarDonor());
 
                                 context.startActivity(intent);
                                 break;

@@ -2,6 +2,7 @@ package com.example.hans_pc.sobatpmi.Detail;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.hans_pc.sobatpmi.Menu.DonorDarahActivity;
 import com.example.hans_pc.sobatpmi.Model.DataBantuDonorDarah;
 import com.example.hans_pc.sobatpmi.Model.DataDonorDarah;
@@ -45,7 +48,9 @@ public class DonorDarahDetail extends AppCompatActivity {
     private FirebaseFirestore dbFirestore;
     private FirebaseAuth dbAuth;
 
-    private String idDonor;
+    private String idDonor, sImageDonorDarah, sPenerimaDonor;
+
+    private ProgressBar progress_barDetailDonorDarah;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class DonorDarahDetail extends AppCompatActivity {
         gol_detailDonorDarah = findViewById(R.id.golDetailDonorDarah);
         jumlah_detailDonorDarah = findViewById(R.id.jumlahDetailDonorDarah);
         button_tambahDonorDarahDetail = findViewById(R.id.buttonTambahDonorDarahDetail);
+        progress_barDetailDonorDarah = findViewById(R.id.progressbarDetailDonorDarah);
 
         dbFirestore = FirebaseFirestore.getInstance();
 
@@ -65,11 +71,26 @@ public class DonorDarahDetail extends AppCompatActivity {
 
         i = getIntent();
 
-        penerima_detailDonorDarah.setText(i.getStringExtra("Penerima Donor"));
+        idDonor = i.getStringExtra("ID Donor");
+        sPenerimaDonor = i.getStringExtra("Penerima Donor");
+        sImageDonorDarah = i.getStringExtra("Gambar Donor");
+
+        penerima_detailDonorDarah.setText(sPenerimaDonor);
         desc_detailDonorDarah.setText(i.getStringExtra("Deskripsi Donor"));
         gol_detailDonorDarah.setText(i.getStringExtra("Golongan Darah"));
         jumlah_detailDonorDarah.setText(i.getStringExtra("Jumlah Donor"));
-        idDonor = i.getStringExtra("ID Donor");
+
+        progress_barDetailDonorDarah.setVisibility(View.VISIBLE);
+
+        if (sImageDonorDarah == null) {
+            progress_barDetailDonorDarah.setVisibility(View.VISIBLE);
+        } else {
+            progress_barDetailDonorDarah.setVisibility(View.GONE);
+            Glide.with(DonorDarahDetail.this)
+                    .load(sImageDonorDarah)
+                    .fitCenter()
+                    .into(gambar_detailDonorDarah);
+        }
 
         button_tambahDonorDarahDetail.setOnClickListener(
                 new View.OnClickListener() {
@@ -98,18 +119,19 @@ public class DonorDarahDetail extends AppCompatActivity {
     private void tambahDonorDarahDetail() {
         Date date = Calendar.getInstance(TimeZone.getDefault()).getTime();
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MMMMM-YYYY hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("MMM dd YYYY, hh:mm:ss");
         String sDate = dateFormat.format(date);
 
         FirebaseUser firebaseUser = dbAuth.getCurrentUser();
 
-        String sEmail = firebaseUser.getEmail();
+        String sNamaPemberiDonor = firebaseUser.getDisplayName();
+        String sEmailPemberiDonor = firebaseUser.getEmail();
 
         int jumlah_donor = Integer.parseInt(jumlah_detailDonorDarah.getText().toString());
         final int jumlah_donorCurrent = jumlah_donor - 1;
 
         final DataBantuDonorDarah current = new DataBantuDonorDarah(
-                sDate, sEmail
+                sDate, sPenerimaDonor, sNamaPemberiDonor, sEmailPemberiDonor
         );
 
         dbFirestore.collection("list_bantudonor").document().set(current)
@@ -149,7 +171,8 @@ public class DonorDarahDetail extends AppCompatActivity {
                 );
 
         current.setDate(sDate);
-        current.setEmail(sEmail);
+        current.setNamaPemberiDonor(sNamaPemberiDonor);
+        current.setEmailPemberiDonor(sEmailPemberiDonor);
     }
 
     private void deleteDataDonor() {
