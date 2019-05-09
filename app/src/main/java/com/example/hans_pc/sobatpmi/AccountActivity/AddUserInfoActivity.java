@@ -1,5 +1,6 @@
 package com.example.hans_pc.sobatpmi.AccountActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -48,6 +49,7 @@ public class AddUserInfoActivity extends AppCompatActivity {
     private Button button_saveAdd;
     private ImageView button_imageAdd;
     private ProgressBar progressbar_AddUser;
+    private ProgressDialog progressDialog;
 
     private FirebaseAuth dbAuth;
     private FirebaseUser dbUser;
@@ -66,6 +68,9 @@ public class AddUserInfoActivity extends AppCompatActivity {
         button_saveAdd = findViewById(R.id.buttonSaveAddUserInfo);
         button_imageAdd = findViewById(R.id.buttonImageAddUserInfo);
         progressbar_AddUser = findViewById(R.id.progressbarAddUserInfo);
+
+        progressDialog = new ProgressDialog(AddUserInfoActivity.this,
+                R.style.AppTheme_Dark_Dialog);
 
         dbFirestore = FirebaseFirestore.getInstance();
         dbAuth = FirebaseAuth.getInstance();
@@ -141,6 +146,11 @@ public class AddUserInfoActivity extends AppCompatActivity {
 
     private void addUserInfo() {
 
+        progressDialog.setMessage("Loading data...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         String display_name = input_displayName.getText().toString();
 
         addExtendUserInfo(display_name);
@@ -151,39 +161,40 @@ public class AddUserInfoActivity extends AppCompatActivity {
             input_displayName.requestFocus();
             return;
         }
-
         if (dbUser != null && urlImageProfile != null) {
-            UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(display_name)
-                    .setPhotoUri(Uri.parse(urlImageProfile))
-                    .build();
+            try {
+                UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(display_name)
+                        .setPhotoUri(Uri.parse(urlImageProfile))
+                        .build();
 
-            dbUser.updateProfile(profileChangeRequest)
-                    .addOnCompleteListener(
-                            new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(AddUserInfoActivity.this,
-                                            "Profile Added", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AddUserInfoActivity.this, MainActivity.class));
-                                    finish();
+                dbUser.updateProfile(profileChangeRequest)
+                        .addOnCompleteListener(
+                                new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(AddUserInfoActivity.this,
+                                                "Profile Added", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(AddUserInfoActivity.this, MainActivity.class));
+                                        finish();
+                                    }
                                 }
+                        ).addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(AddUserInfoActivity.this,
+                                        e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                    ).addOnFailureListener(
-                    new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddUserInfoActivity.this,
-                                    e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-            );
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+                progressDialog.dismiss();
+            }
         }
-
-        else{
-
-        }
-
     }
 
     private void addExtendUserInfo(String sDisplayName) {
@@ -196,20 +207,16 @@ public class AddUserInfoActivity extends AppCompatActivity {
         String sDateJoin = dateFormat.format(date);
 
         final DataProfilUser current = new DataProfilUser(
-                sID, sDisplayName, sEmail, sDateJoin );
+                sID, sDisplayName, sEmail, sDateJoin);
 
         dbFirestore.collection("list_profiluser").document(sID)
                 .set(current).addOnSuccessListener(
                 new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
+                        finish();
                     }
                 }
         );
-        current.setId_user(sID);
-        current.setDisplay_name(sDisplayName);
-        current.setEmail_user(sEmail);
-        current.setDate_join(sDateJoin);
     }
 }

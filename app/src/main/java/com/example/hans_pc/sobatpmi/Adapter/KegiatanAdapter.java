@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.example.hans_pc.sobatpmi.Detail.DonorDarahDetail;
 import com.example.hans_pc.sobatpmi.Menu.KegiatanActivity;
 import com.example.hans_pc.sobatpmi.Model.DataKegiatan;
 import com.example.hans_pc.sobatpmi.R;

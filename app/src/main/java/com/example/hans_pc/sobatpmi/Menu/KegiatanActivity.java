@@ -85,6 +85,12 @@ public class KegiatanActivity extends AppCompatActivity {
     }
 
     private void addKegiatan() {
+
+        progressDialog.setMessage("Adding data...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         String id = UUID.randomUUID().toString();
         sNamaKegiatan = input_namaKegiatan.getEditText().getText().toString();
         sTempatKegiatan = input_tempatKegiatan.getEditText().getText().toString();
@@ -107,6 +113,7 @@ public class KegiatanActivity extends AppCompatActivity {
 
                                 Toast.makeText(KegiatanActivity.this,
                                         "Data Kegiatan Telah Berhasil Ditambahkan", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
 
                             }
                         }
