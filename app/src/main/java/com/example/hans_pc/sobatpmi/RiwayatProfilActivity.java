@@ -55,6 +55,7 @@ public class RiwayatProfilActivity extends AppCompatActivity {
 
                         if(task.getResult().isEmpty()){
                             startActivity(new Intent(RiwayatProfilActivity.this, ProfilActivity.class));
+                            finish();
                         }
 
                         else{

@@ -10,7 +10,7 @@
         android:id="@+id/titleRiwayatProfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Riwayat Profil"
+        android:text="Riwayat Donor"
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@android:color/black"

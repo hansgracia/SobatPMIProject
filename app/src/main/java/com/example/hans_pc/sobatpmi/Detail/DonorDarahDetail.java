@@ -186,6 +186,7 @@ public class DonorDarahDetail extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(DonorDarahDetail.this,
                                     DonorDarahActivity.class));
+                            finish();
                         }
                     }
                 }

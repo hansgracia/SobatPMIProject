@@ -167,6 +167,11 @@ public class DonorDarahActivity extends AppCompatActivity {
     //method untuk menambah donor darah
     private void addDonorDarah() {
 
+        progressDialog.setMessage("Adding data...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         final String id = UUID.randomUUID().toString();
         final String penerima_donor = input_penerimaDonor.getText().toString().trim();
         final String deskripsi_donor = input_deskripsiDonor.getText().toString();

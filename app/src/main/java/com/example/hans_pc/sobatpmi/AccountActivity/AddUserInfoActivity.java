@@ -203,6 +203,7 @@ public class AddUserInfoActivity extends AppCompatActivity {
                 new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
                     }
                 }
         );

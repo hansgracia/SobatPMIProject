@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.hans_pc.sobatpmi.AccountActivity.LoginActivity;
 import com.example.hans_pc.sobatpmi.Menu.DonorDarahActivity;
 import com.example.hans_pc.sobatpmi.Menu.InformasiUmumActivity;
+import com.example.hans_pc.sobatpmi.Menu.KegiatanActivity;
 import com.example.hans_pc.sobatpmi.Menu.LokasiPMIActivity;
 import com.example.hans_pc.sobatpmi.Menu.ProfilActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         donorDarahMenu = findViewById(R.id.donorDarahMenu);
         lokasiPMIMenu = findViewById(R.id.lokasiMenu);
         infoUmumMenu = findViewById(R.id.infoUmumMenu);
+        kegiatanMenu = findViewById(R.id.kegiatanMenu);
         logoutMenu = findViewById(R.id.logoutMenu);
         profilMenu = findViewById(R.id.profilMenu);
         gambar_profilMain = findViewById(R.id.gambarProfilMain);
@@ -58,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LokasiPMIActivity.class));
             }
         });
+
+        kegiatanMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, KegiatanActivity.class));
+            }
+        });
+
         //method button untuk menu informasi umum
         infoUmumMenu.setOnClickListener(new View.OnClickListener() {
             @Override
