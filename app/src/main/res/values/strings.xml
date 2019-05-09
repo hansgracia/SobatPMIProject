@@ -26,7 +26,7 @@
     <string name="jeniskelamin_label_text">Jenis Kelamin</string>
     <string name="enter_JenisKelamin_hint">Pilih Jenis kelamin</string>
     <string name="sign_in">SIGN IN</string>
-    <string name="my_dashboard">My Dashboard</string>
+    <string name="my_dashboard">SOBAT PMI Dashboard</string>
     <string name="donor_darah">Donor Darah</string>
     <string name="lokasi_pmi">Lokasi PMI</string>
     <string name="kegiatan">Kegiatan</string>
@@ -81,4 +81,5 @@
     <string name="nama_penerima_donor">Nama Penerima Donor</string>
     <string name="date_riwayat_profil">Date Riwayat Profil</string>
     <string name="riwayat_profil">Riwayat Profil</string>
+    <string name="error_data_riwayat_kosong">Anda belum pernah melakukan donor</string>
 </resources>

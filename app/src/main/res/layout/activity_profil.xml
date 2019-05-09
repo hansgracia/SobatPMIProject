@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/gambarProfil"
                     android:layout_width="145dp"
                     android:layout_height="145dp"
@@ -31,6 +31,8 @@
                     android:padding="8dp"
                     android:src="@drawable/camera_icon"
                     android:layout_centerHorizontal="true"
+                    app:border_width="4dp"
+                    app:border_color="@color/white"
                     android:scaleType="centerCrop"/>
 
                 <ProgressBar
@@ -117,7 +119,7 @@
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:paddingTop="10dp"
-                        android:textColor="@color/red"/>
+                        android:textColor="@color/startblue"/>
 
                 </LinearLayout>
 

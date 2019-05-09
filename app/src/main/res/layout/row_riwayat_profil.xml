@@ -5,21 +5,51 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/titleDateRiwayatProfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Tanggal Donor"
+        android:textColor="@color/com_facebook_blue"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/rowDateRiwayatProfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/com_facebook_blue"
+        android:text="@string/date_riwayat_profil"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/titleDateRiwayatProfil"/>
+
+    <TextView
+        android:id="@+id/titleNamaPenerimaDonor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:textSize="16sp"
-        android:text="@string/date_riwayat_profil"
+        android:text="Penerima Donor"
+        android:layout_below="@+id/titleDateRiwayatProfil"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/rowNamaPenerimaDonor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:textSize="16sp"
         android:text="@string/nama_penerima_donor"
+        android:layout_below="@+id/rowDateRiwayatProfil"
+        android:layout_alignLeft="@id/rowDateRiwayatProfil"
         android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
 
 </RelativeLayout>

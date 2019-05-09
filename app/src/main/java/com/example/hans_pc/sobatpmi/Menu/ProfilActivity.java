@@ -1,5 +1,6 @@
 package com.example.hans_pc.sobatpmi.Menu;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.hans_pc.sobatpmi.Adapter.RiwayatProfilAdapter;
 import com.example.hans_pc.sobatpmi.Model.DataRiwayatProfil;
 import com.example.hans_pc.sobatpmi.R;
+import com.example.hans_pc.sobatpmi.RiwayatProfilActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,14 +48,6 @@ public class ProfilActivity extends AppCompatActivity {
     private FirebaseAuth dbAuth;
     private FirebaseFirestore dbFirestore;
     private FirebaseUser dbUser;
-
-    private LayoutInflater inflater;
-    private View dialogView;
-
-    private RiwayatProfilAdapter riwayatProfilAdapter;
-    ArrayList<DataRiwayatProfil> data;
-
-    private ListView riwayatListView;
 
     private String sEmail;
 
@@ -84,7 +78,6 @@ public class ProfilActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                     }
                 }
         );
@@ -93,50 +86,10 @@ public class ProfilActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        loadRiwayatInformation();
+                        startActivity(new Intent(ProfilActivity.this, RiwayatProfilActivity.class));
                     }
                 }
         );
-    }
-
-    private void loadRiwayatInformation() {
-        AlertDialog.Builder cdialog = new AlertDialog.Builder(ProfilActivity.this);
-
-        inflater = getLayoutInflater();
-
-        dialogView = inflater.inflate(R.layout.cdialog_riwayat_profil, null);
-
-        cdialog.setView(dialogView);
-        cdialog.setCancelable(true);
-        cdialog.setTitle("Riwayat Donor Darah");
-
-        data = new ArrayList<DataRiwayatProfil>();
-
-        dbFirestore.collection("list_bantudonor").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        data.clear();
-                        for(DocumentSnapshot doc : task.getResult()){
-                            DataRiwayatProfil dataRiwayatProfil = new DataRiwayatProfil(
-                                    doc.getString("date"),
-                                    doc.getString("namaPenerimaDonor")
-                            );
-                            data.add(dataRiwayatProfil);
-                        }
-                        riwayatProfilAdapter = new RiwayatProfilAdapter(ProfilActivity.this, data);
-                        riwayatListView = findViewById(R.id.riwayatProfilList);
-                        riwayatListView.setAdapter(riwayatProfilAdapter);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        tanggal_bergabungProfil.setText(e.getMessage());
-                    }
-                });
-
-        cdialog.show();
     }
 
     private void loadProfilInformation() {
