@@ -68,7 +68,6 @@ public class ProfilActivity extends AppCompatActivity {
         jumlah_riwayatProfil = findViewById(R.id.jumlahRiwayatProfil);
         tanggal_bergabungProfil = findViewById(R.id.tanggalBergabungProfil);
         email_profil = findViewById(R.id.emailProfil);
-        password_profil = findViewById(R.id.passwordProfil);
         button_editProfil = findViewById(R.id.buttonEditProfil);
         progressbar_profil = findViewById(R.id.progressbarProfil);
 
