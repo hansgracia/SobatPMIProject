@@ -1,6 +1,7 @@
 package com.example.hans_pc.sobatpmi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.example.hans_pc.sobatpmi.Menu.InformasiUmumActivity;
 import com.example.hans_pc.sobatpmi.Menu.KegiatanActivity;
 import com.example.hans_pc.sobatpmi.Menu.LokasiPMIActivity;
 import com.example.hans_pc.sobatpmi.Menu.ProfilActivity;
+import com.example.hans_pc.sobatpmi.Menu.SettingsActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,18 +28,23 @@ public class MainActivity extends AppCompatActivity {
     //inisiasi variable
     private FirebaseAuth firebaseAuth;
     private GoogleSignInAccount mGoogleSignInClient;
-    CardView donorDarahMenu, logoutMenu, infoUmumMenu, lokasiPMIMenu, profilMenu, kegiatanMenu;
+    CardView donorDarahMenu, logoutMenu, infoUmumMenu, lokasiPMIMenu, profilMenu, kegiatanMenu, settingsMenu;
     ImageView gambar_profilMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        settingsPrefence();
+
         setContentView(R.layout.activity_main);
 
         donorDarahMenu = findViewById(R.id.donorDarahMenu);
         lokasiPMIMenu = findViewById(R.id.lokasiMenu);
         infoUmumMenu = findViewById(R.id.infoUmumMenu);
         kegiatanMenu = findViewById(R.id.kegiatanMenu);
+        settingsMenu = findViewById(R.id.settingsMenu);
         logoutMenu = findViewById(R.id.logoutMenu);
         profilMenu = findViewById(R.id.profilMenu);
         gambar_profilMain = findViewById(R.id.gambarProfilMain);
@@ -75,6 +82,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, InformasiUmumActivity.class));
             }
         });
+
+        settingsMenu.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                    }
+                }
+        );
+
         //method button untuk menu profil
         profilMenu.setOnClickListener(
                 new View.OnClickListener() {
@@ -84,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+
+
         //method button untuk logout
         logoutMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +115,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    private void settingsPrefence() {SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+
+        boolean theme = preferences.getBoolean("set_dark_theme", false);
+        boolean font = preferences.getBoolean("set_font_large", false);
+
+        if (theme && font) {
+            setTheme(R.style.AppTheme_Dark_FontLarge);
+        } else if (theme) {
+            setTheme(R.style.AppTheme_Dark_FontNormal);
+        } else if (font) {
+            setTheme(R.style.AppTheme_FontLarge);
+        }
+    }
+
     //method untuk load image dari profil
     private void loadImageProfil() {
 

@@ -1,6 +1,7 @@
 package com.example.hans_pc.sobatpmi.Menu;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,8 @@ public class LokasiPMIActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        settingsPreference();
         setContentView(R.layout.activity_lokasi_pmi);
 
         button_backLokasiPMI = findViewById(R.id.buttonBackLokasiPMI);
@@ -57,6 +60,21 @@ public class LokasiPMIActivity extends AppCompatActivity {
         dbFirestore = FirebaseFirestore.getInstance();
 
         showData();
+    }
+
+    private void settingsPreference() {
+        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+
+        boolean theme = preferences.getBoolean("set_dark_theme", false);
+        boolean font = preferences.getBoolean("set_font_large", false);
+
+        if (theme && font) {
+            setTheme(R.style.AppTheme_Dark_FontLarge);
+        } else if (theme) {
+            setTheme(R.style.AppTheme_Dark_FontNormal);
+        } else if (font) {
+            setTheme(R.style.AppTheme_FontLarge);
+        }
     }
 
     private void showData() {

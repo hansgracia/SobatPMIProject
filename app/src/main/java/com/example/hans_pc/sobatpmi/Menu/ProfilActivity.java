@@ -1,6 +1,7 @@
 package com.example.hans_pc.sobatpmi.Menu;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -55,6 +56,8 @@ public class ProfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        settingsPreference();
         setContentView(R.layout.activity_profil);
 
         dbAuth = FirebaseAuth.getInstance();
@@ -90,6 +93,21 @@ public class ProfilActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void settingsPreference() {
+        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+
+        boolean theme = preferences.getBoolean("set_dark_theme", false);
+        boolean font = preferences.getBoolean("set_font_large", false);
+
+        if (theme && font) {
+            setTheme(R.style.AppTheme_Dark_FontLarge);
+        } else if (theme) {
+            setTheme(R.style.AppTheme_Dark_FontNormal);
+        } else if (font) {
+            setTheme(R.style.AppTheme_FontLarge);
+        }
     }
 
     private void loadProfilInformation() {
@@ -129,13 +147,13 @@ public class ProfilActivity extends AppCompatActivity {
         );
     }
 
-    private void loadTanggalBergabung(){
+    private void loadTanggalBergabung() {
         dbFirestore.collection("list_profiluser").whereEqualTo("email_user", sEmail).get()
                 .addOnCompleteListener(
                         new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                for(DocumentSnapshot doc: task.getResult()){
+                                for (DocumentSnapshot doc : task.getResult()) {
                                     String sTanggalBergabung = doc.getString("date_join");
                                     tanggal_bergabungProfil.setText(sTanggalBergabung);
                                 }
@@ -153,11 +171,10 @@ public class ProfilActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                     int jumlahDocument = queryDocumentSnapshots.size();
-                                    if(jumlahDocument <= 0){
+                                    if (jumlahDocument <= 0) {
                                         jumlah_riwayatProfil.setText("0");
                                         jumlah_riwayatProfil.setTextColor(getResources().getColor(R.color.red));
-                                    }
-                                    else{
+                                    } else {
                                         jumlah_riwayatProfil.setText(String.valueOf(jumlahDocument));
                                     }
                                 }

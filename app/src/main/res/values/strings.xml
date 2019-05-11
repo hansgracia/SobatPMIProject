@@ -82,4 +82,8 @@
     <string name="date_riwayat_profil">Date Riwayat Profil</string>
     <string name="riwayat_profil">Riwayat Profil</string>
     <string name="error_data_riwayat_kosong">Anda belum pernah melakukan donor</string>
+    <string name="settings">Settings</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="font_size">Font Size</string>
+    <string name="save">Save</string>
 </resources>

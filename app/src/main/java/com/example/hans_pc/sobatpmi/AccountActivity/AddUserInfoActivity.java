@@ -7,11 +7,11 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -45,7 +45,7 @@ public class AddUserInfoActivity extends AppCompatActivity {
     private static final int CHOOSE_IMAGE = 101;
     private String urlImageProfile;
 
-    private EditText input_displayName;
+    private TextInputLayout input_displayName;
     private Button button_saveAdd;
     private ImageView button_imageAdd;
     private ProgressBar progressbar_AddUser;
@@ -151,7 +151,7 @@ public class AddUserInfoActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String display_name = input_displayName.getText().toString();
+        String display_name = input_displayName.getEditText().getText().toString();
 
         addExtendUserInfo(display_name);
         uploadImageProfile();

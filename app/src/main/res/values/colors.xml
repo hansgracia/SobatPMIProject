@@ -12,4 +12,10 @@
     <color name="iron">#CCCCCC</color>
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
+    <color name="nightColorPrimary">#0000d6</color>
+    <color name="nightColorDark">#6002ee</color>
+    <color name="nightColorBackground">#000000</color>
+    <color name="transparent_white">#00FFFFFF</color>
+    <color name="transparent_black">#00000000</color>
+    <color name="silver">#C0C0C0</color>
 </resources>

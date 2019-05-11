@@ -3,6 +3,7 @@ package com.example.hans_pc.sobatpmi.Menu;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,7 +54,8 @@ import java.util.UUID;
 public class DonorDarahActivity extends AppCompatActivity {
 
     private static final int CHOOSE_IMAGE = 101;
-    private EditText input_penerimaDonor, input_deskripsiDonor, input_jumlahDonor;
+    private EditText input_jumlahDonor;
+    private TextInputLayout input_penerimaDonor, input_deskripsiDonor;
     private ImageView button_imageAddCusDialDonorDarah;
     private Spinner input_golonganDonorDarah;
 
@@ -76,6 +79,8 @@ public class DonorDarahActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        settingsPreference();
         setContentView(R.layout.activity_donor_darah);
 
         progressDialog = new ProgressDialog(DonorDarahActivity.this,
@@ -102,6 +107,21 @@ public class DonorDarahActivity extends AppCompatActivity {
                 CustomDialogDonorDarah();
             }
         });
+    }
+
+    private void settingsPreference() {
+        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+
+        boolean theme = preferences.getBoolean("set_dark_theme", false);
+        boolean font = preferences.getBoolean("set_font_large", false);
+
+        if (theme && font) {
+            setTheme(R.style.AppTheme_Dark_FontLarge);
+        } else if (theme) {
+            setTheme(R.style.AppTheme_Dark_FontNormal);
+        } else if (font) {
+            setTheme(R.style.AppTheme_FontLarge);
+        }
     }
 
     //method untuk costumer dialog donor darah
@@ -173,8 +193,8 @@ public class DonorDarahActivity extends AppCompatActivity {
         progressDialog.show();
 
         final String id = UUID.randomUUID().toString();
-        final String penerima_donor = input_penerimaDonor.getText().toString().trim();
-        final String deskripsi_donor = input_deskripsiDonor.getText().toString();
+        final String penerima_donor = input_penerimaDonor.getEditText().getText().toString().trim();
+        final String deskripsi_donor = input_deskripsiDonor.getEditText().getText().toString();
         final int jumlah_donor = Integer.parseInt(input_jumlahDonor.getText().toString());
         final String golongan_darah = input_golonganDonorDarah.getSelectedItem().toString();
 
@@ -324,8 +344,8 @@ public class DonorDarahActivity extends AppCompatActivity {
 
     //method untuk clear data
     private void clear() {
-        input_penerimaDonor.setText(null);
-        input_deskripsiDonor.setText(null);
+        input_penerimaDonor.getEditText().setText(null);
+        input_deskripsiDonor.getEditText().setText(null);
         input_jumlahDonor.setText(null);
         input_golonganDonorDarah.setSelection(0);
     }

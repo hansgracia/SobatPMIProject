@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -21,6 +21,31 @@
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/iron</item>
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:colorBackground">@color/nightColorBackground</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:colorPrimary" tools:targetApi="lollipop">@color/nightColorPrimary</item>
+        <item name="android:colorPrimaryDark" tools:targetApi="lollipop">@color/nightColorDark
+        </item>
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.FontNormal" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.FontLarge" parent="AppTheme">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="AppTheme.Dark.FontNormal" parent="AppTheme.Dark">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.Dark.FontLarge" parent="AppTheme.Dark">
+        <item name="android:textSize">24sp</item>
     </style>
 
 </resources>

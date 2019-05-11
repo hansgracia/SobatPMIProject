@@ -1,184 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hans_pc.sobatpmi.Menu.ProfilActivity"
     android:background="@color/graylight"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:background="@xml/gradientbackground"
-            android:layout_width="match_parent"
-            android:layout_height="265dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/gambarProfil"
-                android:layout_marginTop="25dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:src="@drawable/camera_icon"/>
-
-            <TextView
-                android:id="@+id/displayNameProfil"
-                android:layout_marginTop="2dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/display_name"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:textSize="21sp"/>
-
-        </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="380dp"
-            android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:baselineAligned="false"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/riwayat_donor"
-                        android:textSize="20sp"
-                        />
-
-                    <TextView
-                        android:id="@+id/jumlahRiwayatProfil"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:paddingTop="10dp"
-                        android:textColor="@color/startblue"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tanggal_bergabung"
-                        android:textSize="20sp"
-                        />
-
-                    <TextView
-                        android:id="@+id/tanggalBergabungProfil"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:paddingTop="10dp"
-                        android:textColor="@color/startblue"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </RelativeLayout>
+    tools:context="com.example.hans_pc.sobatpmi.Menu.ProfilActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_marginTop="45dp" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:paddingLeft="45dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:padding="4dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_email_blue"/>
-
-            <TextView
-                android:id="@+id/emailProfil"
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="@string/email_dari_user_nantinya"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal"
-            android:paddingLeft="45dp"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:padding="4dp"
-                app:srcCompat="@drawable/ic_password_blue"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="285dp"
+                android:background="@color/colorPrimaryDark"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/passwordProfil"
-                android:textStyle="bold"
-                android:inputType="textPassword"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/gambarProfil"
+                        android:layout_width="145dp"
+                        android:layout_height="145dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:padding="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/camera_icon"
+                        app:border_color="@color/white"
+                        app:border_width="4dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressbarProfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/displayNameProfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/gambarProfil"
+                        android:layout_alignStart="@+id/gambarProfil"
+                        android:layout_alignLeft="@+id/gambarProfil"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/display_name"
+                        android:textColor="#fff"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="380dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="215dp"
+                app:cardBackgroundColor="@color/silver">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/riwayat_donor"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/jumlahRiwayatProfil"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="10dp"
+                            android:text="..."
+                            android:textColor="@color/startblue"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tanggal_bergabung"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/tanggalBergabungProfil"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:text="..."
+                            android:textColor="@color/startblue"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:hint="@string/password_dari_user_nantinya"/>
+                android:orientation="horizontal"
+                android:paddingLeft="45dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/ic_email_blue" />
+
+                <TextView
+                    android:id="@+id/emailProfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/email_dari_user_nantinya"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/buttonEditProfil"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:background="@xml/button_style_gradient"
+            android:text="@string/edit_profil"
+            android:textColor="#fff" />
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonEditProfil"
-        android:textColor="#fff"
-        android:background="@xml/button_style_gradient"
-        android:layout_marginTop="35dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_profil"/>
-
-</LinearLayout>
+</ScrollView>
